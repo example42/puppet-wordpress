@@ -18,7 +18,7 @@ class wordpress::params {
 
   # Install source from the upstream provider is updated to module's last update time
   # You may need to change this: use the "install_source" parameter of the wordpress class
-  $install_source = "http://download.wordpress.com/wordpress.tar.gz"
+  $install_source = "http://wordpress.org/latest.zip"
  
   $install_destination = $operatingsystem ? {
     /(?i:Debian|Ubuntu|Mint)/ => "/var/www",
@@ -39,11 +39,11 @@ class wordpress::params {
   }
 
   $config_dir = $operatingsystem ? {
-    default => "/etc/wordpress/conf",
+    default => "/etc/wordpress",
   }
 
   $config_file = $operatingsystem ? {
-    default => "/etc/wordpress/wordpress.conf",
+    default => "/etc/wordpress/wp-config.php",
   } 
 
   $config_file_mode = $operatingsystem ? { 
@@ -59,7 +59,7 @@ class wordpress::params {
   }
 
   $data_dir = $operatingsystem ? {
-    default => "/var/lib/wordpress",
+    default => "/usr/share/wordpress",
   }
 
   $log_dir = $operatingsystem ? {
