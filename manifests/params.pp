@@ -19,8 +19,8 @@ class wordpress::params {
     default => $::wordpress_install,
   }
 
-  # Install source from the upstream provider is updated to module's last update time
-  # You may need to change this: use the "install_source" parameter of the wordpress class
+  # Install source from the upstream provider is updated to module's last update time
+  # You may need to change this: use the "install_source" parameter of the wordpress class
   $install_source = $::wordpress_install_source ? {
     ''      => "http://wordpress.org/latest.zip",    # Default value
     default => $::wordpress_install_source,
@@ -93,7 +93,7 @@ class wordpress::params {
     default => $::wordpress_db_user,
   }
 
-  # We precalculate a random password
+  # We precalculate a random password
   $wordpress_random_password = fqdn_rand(100000000000) 
 
   $db_password = $::wordpress_db_password ? {

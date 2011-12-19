@@ -313,7 +313,7 @@ class wordpress (
     }
   } 
 
-  # Include database configuration, if db_type set 
+  # Include database configuration, if db_type set 
   if $wordpress::db_type == "mysql" {
     include wordpress::mysql
   } 
