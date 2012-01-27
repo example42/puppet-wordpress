@@ -320,15 +320,11 @@ class wordpress (
 
   # Provide puppi data, if enabled ( puppi => true )
   if any2bool($wordpress::puppi) == true { 
-    $puppivars=get_class_args()
-    file { "puppi_wordpress":
-      path    => "${settings::vardir}/puppi/wordpress",
-      mode    => "0644",
-      owner   => "root",
-      group   => "root",
-      ensure  => "${wordpress::manage_file}",
-      require => Class["puppi"],         
-      content => inline_template("<%= puppivars.to_yaml %>"),
+    $classvars=get_class_args()
+    puppi::ze { 'wordpress':
+      ensure    => $wordpress::manage_file,
+      variables => $classvars,
+      helper    => $wordpress::puppi_helper,
     }
   }
 
