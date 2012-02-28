@@ -27,7 +27,7 @@ describe 'wordpress' do
     let(:facts) { { :ipaddress => '10.42.42.42' , :operatingsystem => 'Ubuntu' } }
 
     it 'should contain a netinstall resource with valid destination_dir' do
-      content = catalogue.resource('netinstall', 'netinstall_wordpress').send(:parameters)[:destination_dir]
+      content = catalogue.resource('puppi::netinstall', 'netinstall_wordpress').send(:parameters)[:destination_dir]
       content.should == '/var/www'
     end
   end
