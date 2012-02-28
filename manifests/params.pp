@@ -23,7 +23,7 @@ class wordpress::params {
   $url_pattern = 'wordpress'
   $web_server = 'apache'
   $web_server_template = 'wordpress/apache/virtualhost.conf.erb'
-  $web_virtualhost = "wordpress.$::domain"
+  $web_virtualhost = "$::fqdn"
   $db_type = 'mysql'
   $db_host = 'localhost'
   $db_name = 'wordpress'
@@ -36,17 +36,6 @@ class wordpress::params {
     default => 'wordpress',
   }
 
-  $config_dir = $::operatingsystem ? {
-    default => '/etc/wordpress',
-  }
-
-  $config_file = $wordpress::install ? {
-    package => $::operatingsystem ? {
-      default => '/etc/wordpress/wp-config.php',
-    },
-    default => "$wordpress::install_destination/wp-config.php",
-  }
-
   $config_file_mode = $::operatingsystem ? {
     default => '0644',
   }
@@ -57,13 +46,6 @@ class wordpress::params {
 
   $config_file_group = $::operatingsystem ? {
     default => 'root',
-  }
-
-  $data_dir = $wordpress::install ? {
-    package => $::operatingsystem ? {
-      default => '/usr/share/wordpress',
-    },
-    default => $wordpress::install_destination,
   }
 
   $log_dir = $::operatingsystem ? {

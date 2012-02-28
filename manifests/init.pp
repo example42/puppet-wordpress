@@ -297,14 +297,42 @@ class wordpress (
 
   ### Calculations of variables that depends on different params
   $real_install_destination = $wordpress::install_destination ? {
-    ''      => $wordpress::web_server ? {
-      'apache' => $::operatingsystem ? {
-        /(?i:Debian|Ubuntu|Mint)/ => '/var/www',
-        /(?i:Suse|OpenSuse)/      => '/srv/www',
-        default                   => '/var/www/html',
-      },
-    default => $wordpress::install_destination,
+    ''      => $wordpress::install ? {
+      package => '/usr/share/wordpress',
+      default => $wordpress::web_server ? {
+        'apache' => $::operatingsystem ? {
+          /(?i:Debian|Ubuntu|Mint)/ => '/var/www',
+          /(?i:Suse|OpenSuse)/      => '/srv/www',
+          default                   => '/var/www/html',
+        },
+        default => $wordpress::install_destination,
+      }
     }
+  }
+
+  $real_config_file = $wordpress::config_file ? {
+    ''      => $wordpress::install ? {
+      package => $::operatingsystem ? {
+        default => '/etc/wordpress/wp-config.php',
+      },
+      default => "$wordpress::install_destination/wp-config.php",
+    },
+    default => $wordpress::config_file,
+  }
+
+  $real_config_dir = $wordpress::config_dir ? {
+    ''      => $wordpress::install ? {
+      package => $::operatingsystem ? {
+        default => '/etc/wordpress/',
+      },
+      default => "$wordpress::install_destination/wp-config.php",
+    },
+    default => $wordpress::config_file,
+  }
+
+  $real_data_dir = $wordpress::data_dir ? {
+    ''      => $wordpress::real_install_destination,
+    default => $wordpress::data_dir,
   }
 
   ### Managed resources
@@ -313,7 +341,7 @@ class wordpress (
 
   file { 'wordpress.conf':
     ensure  => $wordpress::manage_file,
-    path    => $wordpress::config_file,
+    path    => $wordpress::real_config_file,
     mode    => $wordpress::config_file_mode,
     owner   => $wordpress::config_file_owner,
     group   => $wordpress::config_file_group,
@@ -328,7 +356,7 @@ class wordpress (
   if $wordpress::source_dir {
     file { 'wordpress.dir':
       ensure  => directory,
-      path    => $wordpress::config_dir,
+      path    => $wordpress::real_config_dir,
       require => Class['wordpress::install'],
       source  => $source_dir,
       recurse => true,
@@ -392,5 +420,4 @@ class wordpress (
       content => inline_template('<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime.*|path|timestamp|free|.*password.*|.*psk.*|.*key)/ }.to_yaml %>'),
     }
   }
-
 }
