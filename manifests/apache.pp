@@ -11,8 +11,7 @@ class wordpress::apache inherits wordpress {
 
   apache::vhost { $wordpress::web_virtualhost :
     template => $wordpress::web_server_template,
-    docroot  => $wordpress::real_install_destination,
-    port     => '80',
+    docroot  => $wordpress::real_data_dir,
   }
 
 }

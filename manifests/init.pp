@@ -28,6 +28,10 @@
 #   By default is the distro's default DocumentRoot for Web server
 #   Can be defined also by the variable $wordpress_install_destination
 #
+# [*install_dirname*]
+#   Name of the directory created by the source tarball/zip
+#   Default is based on the official sources. You hardly need to override it
+#
 # [*install_precommand*]
 #   A custom command to execute before installing the source tarball/zip.
 #   Used if install => "source" or "puppi"
@@ -189,7 +193,7 @@
 #   Main configuration file path group
 #
 # [*data_dir*]
-#   Path of application data directory. Used by puppi
+#   Path of application files
 #
 # [*log_dir*]
 #   Base logs directory. Used by puppi
@@ -213,6 +217,7 @@ class wordpress (
   $install             = params_lookup( 'install' ),
   $install_source      = params_lookup( 'install_source' ),
   $install_destination = params_lookup( 'install_destination' ),
+  $install_dirname     = params_lookup( 'install_dirname' ),
   $install_precommand  = params_lookup( 'install_precommand' ),
   $install_postcommand = params_lookup( 'install_postcommand' ),
   $url_check           = params_lookup( 'url_check' ),
@@ -296,18 +301,15 @@ class wordpress (
   }
 
   ### Calculations of variables that depends on different params
-  $real_install_destination = $wordpress::install_destination ? {
-    ''      => $wordpress::install ? {
-      package => '/usr/share/wordpress',
-      default => $wordpress::web_server ? {
-        'apache' => $::operatingsystem ? {
-          /(?i:Debian|Ubuntu|Mint)/ => '/var/www',
-          /(?i:Suse|OpenSuse)/      => '/srv/www',
-          default                   => '/var/www/html',
-        },
-        default => $wordpress::install_destination,
-      }
-    }
+  $real_install_destination = $wordpress::install_destination ? { 
+    ''      => $wordpress::webserver ? {
+      default => $::operatingsystem ? {
+        /(?i:Debian|Ubuntu|Mint)/ => '/var/www',
+        /(?i:Suse|OpenSuse)/      => '/srv/www',
+        default                   => '/var/www/html',
+      },
+    },
+    default => $wordpress::install_destination,
   }
 
   $real_config_file = $wordpress::config_file ? {
@@ -315,7 +317,7 @@ class wordpress (
       package => $::operatingsystem ? {
         default => '/etc/wordpress/wp-config.php',
       },
-      default => "$wordpress::install_destination/wp-config.php",
+      default => "${wordpress::real_install_destination}/${wordpress::install_dirname}/wp-config.php",
     },
     default => $wordpress::config_file,
   }
@@ -325,13 +327,16 @@ class wordpress (
       package => $::operatingsystem ? {
         default => '/etc/wordpress/',
       },
-      default => "$wordpress::install_destination/wp-config.php",
+      default => "${wordpress::real_install_destination}/${wordpress::install_dirname}/",
     },
     default => $wordpress::config_file,
   }
 
   $real_data_dir = $wordpress::data_dir ? {
-    ''      => $wordpress::real_install_destination,
+    ''      => $wordpress::install ? {
+      package => '/usr/share/wordpress',
+      default => "${wordpress::real_install_destination}/${wordpress::install_dirname}",
+    },
     default => $wordpress::data_dir,
   }
 

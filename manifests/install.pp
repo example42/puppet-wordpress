@@ -26,6 +26,7 @@ class wordpress::install inherits wordpress {
       puppi::netinstall { 'netinstall_wordpress':
         url                 => $wordpress::install_source,
         destination_dir     => $wordpress::real_install_destination,
+        extracted_dir       => $wordpress::install_dirname,
         preextract_command  => $wordpress::install_precommand,
         postextract_command => $wordpress::install_postcommand,
       }

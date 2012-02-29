@@ -17,9 +17,10 @@ class wordpress::params {
   ### WebApp specific parameters
   $install = 'package'
   $install_source = 'http://wordpress.org/latest.zip'
+  $install_dirname = 'wordpress'
   $install_precommand = ''
   $install_postcommand = ''
-  $url_check = ''
+  $url_check = "$::fqdn"
   $url_pattern = 'wordpress'
   $web_server = 'apache'
   $web_server_template = 'wordpress/apache/virtualhost.conf.erb'

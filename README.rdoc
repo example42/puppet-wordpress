@@ -16,10 +16,22 @@ For detailed info about the logic and usage patterns of Example42 modules read R
 
 == USAGE - Basic management
 
-* Install wordpress with default settings
+* Install wordpress using your distro package, if available
 
         class { "wordpress": }
 
+* Install the latest wordpress version from upstream site
+
+        class { "wordpress":
+          install             => "source",
+        }
+
+* Install the latest wordpress version from upstream site using puppi. 
+  You will have a 'puppi deploy wordpress' to deploy and update wordpress.
+
+        class { "wordpress":
+          install             => "puppi",
+        }
 
 * Install source from a custom url to a custom install_destination path.
   The following parameters apply both for "source" and "puppi" install methods.
@@ -31,11 +43,6 @@ For detailed info about the logic and usage patterns of Example42 modules read R
         class { "wordpress":
           install             => "source",
           install_source      => "http://deploy.example42.com/wordpress/wordpress.tar.gz",
-          install_destination => "/opt/apps/",
-          # install_precommand  => "...",
-          # install_postcommand => "...",
-          # url_check           => "...",
-          # url_pattern         => "...",
         }
 
 * Remove wordpress
