@@ -8,7 +8,7 @@
     CustomLog <%= scope.lookupvar('apache::params::logdir') %>/<%= name %>-access_log common
 
     <Directory <%= docroot %>>
-        AllowOverride Options
+        AllowOverride All
     </Directory>
 
     ErrorDocument 401 /
