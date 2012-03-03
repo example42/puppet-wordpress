@@ -10,7 +10,7 @@
 class wordpress::apache inherits wordpress {
 
   apache::vhost { $wordpress::web_virtualhost :
-    template => $wordpress::web_server_template,
+    template => $wordpress::real_web_server_template,
     docroot  => $wordpress::real_data_dir,
   }
 

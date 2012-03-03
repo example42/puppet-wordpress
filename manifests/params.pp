@@ -23,7 +23,7 @@ class wordpress::params {
   $url_check = "$::fqdn"
   $url_pattern = 'wordpress'
   $web_server = 'apache'
-  $web_server_template = 'wordpress/apache/virtualhost.conf.erb'
+  $web_server_template = ''
   $web_virtualhost = "$::fqdn"
   $db_type = 'mysql'
   $db_host = 'localhost'

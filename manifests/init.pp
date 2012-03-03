@@ -300,7 +300,7 @@ class wordpress (
     default   => template($wordpress::template),
   }
 
-  ### Calculations of variables that depends on different params
+  ### Calculations of variables whoe value depends on different params
   $real_install_destination = $wordpress::install_destination ? { 
     ''      => $wordpress::webserver ? {
       default => $::operatingsystem ? {
@@ -338,6 +338,14 @@ class wordpress (
       default => "${wordpress::real_install_destination}/${wordpress::install_dirname}",
     },
     default => $wordpress::data_dir,
+  }
+
+  $real_web_server_template = $wordpress::web_server_template ? {
+    ''      => $wordpress::web_server ? {
+      apache  =>  'wordpress/apache/virtualhost.conf.erb',
+      nginx   =>  'wordpress/nginx/virtualhost.conf.erb',
+    },
+    default => $wordpress::web_server_template,
   }
 
   ### Managed resources
@@ -379,7 +387,8 @@ class wordpress (
 
   # Include web server configuration if requested
   case $wordpress::web_server {
-    apache,apache2: { include wordpress::apache }
+    apache: { include wordpress::apache }
+    nginx: { include wordpress::nginx }
     default: { }
   }
 
