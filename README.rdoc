@@ -62,7 +62,7 @@ For detailed info about the logic and usage patterns of Example42 modules read R
 * Use custom sources for main config file 
 
         class { "wordpress":
-          source => [ "puppet:///modules/lab42/wordpress/wordpress.conf-${hostname}" , "puppet:///modules/lab42/wordpress/wordpress.conf" ], 
+          source => [ "puppet:///modules/lab42/wordpress/wp-config.php-${hostname}" , "puppet:///modules/lab42/wordpress/wp-config.php" ], 
         }
 
 
@@ -76,18 +76,7 @@ For detailed info about the logic and usage patterns of Example42 modules read R
 * Use custom template for main config file 
 
         class { "wordpress":
-          template => "example42/wordpress/wordpress.conf.erb",      
-        }
-
-* Define custom options that can be used in a custom template without the
-  need to add parameters to the wordpress class
-
-        class { "wordpress":
-          template => "example42/wordpress/wordpress.conf.erb",    
-          options  => {
-            'LogLevel' => 'INFO',
-            'UsePAM'   => 'yes',
-          },
+          template => "example42/wordpress/wp-config.php.erb",      
         }
 
 * Automaticallly include a custom subclass

@@ -20,7 +20,7 @@ class wordpress::params {
   $install_dirname = 'wordpress'
   $install_precommand = ''
   $install_postcommand = ''
-  $url_check = "$::fqdn"
+  $url_check = ''
   $url_pattern = 'wordpress'
   $web_server = 'apache'
   $web_server_template = ''
