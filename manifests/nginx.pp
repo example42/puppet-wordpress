@@ -9,9 +9,9 @@
 #
 class wordpress::nginx inherits wordpress {
 
-  nginx::resource::vhost { $wordpress::web_virtualhost :
-#    template  => $wordpress::real_web_server_template,
-    www_root  => $wordpress::real_data_dir,
+  nginx::vhost { $wordpress::web_virtualhost :
+    template  => $wordpress::real_web_server_template,
+    docroot  => $wordpress::real_data_dir,
   }
 
 }
