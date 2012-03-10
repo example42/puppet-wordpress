@@ -4,8 +4,8 @@
     ServerAdmin webmaster@<%= name %>
     DocumentRoot <%= docroot %>
     ServerName <%= name %>
-    ErrorLog <%= scope.lookupvar('apache::params::logdir') %>/<%= name %>-error_log
-    CustomLog <%= scope.lookupvar('apache::params::logdir') %>/<%= name %>-access_log common
+    ErrorLog <%= scope.lookupvar('apache::log_dir') %>/<%= name %>-error_log
+    CustomLog <%= scope.lookupvar('apache::log_dir') %>/<%= name %>-access_log common
 
     <Directory <%= docroot %>>
         AllowOverride All
