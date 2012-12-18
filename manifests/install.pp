@@ -28,7 +28,7 @@ class wordpress::install inherits wordpress {
         destination_dir     => $wordpress::real_install_destination,
         extracted_dir       => $wordpress::install_dirname,
         preextract_command  => $wordpress::install_precommand,
-        postextract_command => $wordpress::install_postcommand,
+        postextract_command => $wordpress::real_install_postcommand,
       }
     }
 
@@ -37,7 +37,7 @@ class wordpress::install inherits wordpress {
         source                   => $wordpress::install_source,
         deploy_root              => $wordpress::real_install_destination,
         predeploy_customcommand  => $wordpress::install_precommand,
-        postdeploy_customcommand => $wordpress::install_postcommand,
+        postdeploy_customcommand => $wordpress::real_install_postcommand,
         report_email             => 'root',
         auto_deploy              => true,
         enable                   => true,

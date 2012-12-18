@@ -347,6 +347,19 @@ class wordpress (
     default => $wordpress::web_server_template,
   }
 
+  $real_data_dir_user = $wordpress::webserver ? {
+    default => $::operatingsystem ? {
+      /(?i:Ubuntu|Debian|Mint)/ => 'www-data',
+      default                   => 'apache',
+    }
+  }
+
+  # This sets the right permissions for wp-content
+  $real_install_postcommand = $install_postcommand ? {
+    ''      => "chown -R ${real_data_dir_user} ${real_data_dir}/wp-content",
+    default => $install_postcommand,
+  }
+
   ### Managed resources
   # Installation is managed in dedicated class
   require wordpress::install

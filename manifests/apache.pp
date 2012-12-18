@@ -15,7 +15,6 @@ class wordpress::apache {
     docroot  => $wordpress::real_data_dir,
   }
 
-  include php
   php::module { 'mysql': }
 
 }
