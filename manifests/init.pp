@@ -250,7 +250,6 @@ class wordpress (
   $config_file_mode    = params_lookup( 'config_file_mode' ),
   $config_file_owner   = params_lookup( 'config_file_owner' ),
   $config_file_group   = params_lookup( 'config_file_group' ),
-  $config_file_init    = params_lookup( 'config_file_init' ),
   $data_dir            = params_lookup( 'data_dir' ),
   $log_dir             = params_lookup( 'log_dir' ),
   $log_file            = params_lookup( 'log_file' )

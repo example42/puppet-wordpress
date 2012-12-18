@@ -9,3 +9,4 @@ description 'This module installs and manages wordpress. Check README.rdoc for d
 dependency 'example42/puppi', '>= 2.0.0'
 dependency 'example42/apache', '>= 2.0.0'
 dependency 'example42/php', '>= 2.0.0'
+dependency 'example42/mysql', '>= 2.0.0'
