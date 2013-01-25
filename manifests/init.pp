@@ -301,7 +301,7 @@ class wordpress (
 
   ### Calculations of variables whoe value depends on different params
   $real_install_destination = $wordpress::install_destination ? { 
-    ''      => $wordpress::webserver ? {
+    ''      => $wordpress::web_server ? {
       default => $::operatingsystem ? {
         /(?i:Debian|Ubuntu|Mint)/ => '/var/www',
         /(?i:Suse|OpenSuse)/      => '/srv/www',
@@ -347,7 +347,7 @@ class wordpress (
     default => $wordpress::web_server_template,
   }
 
-  $real_data_dir_user = $wordpress::webserver ? {
+  $real_data_dir_user = $wordpress::web_server ? {
     default => $::operatingsystem ? {
       /(?i:Ubuntu|Debian|Mint)/ => 'www-data',
       default                   => 'apache',
