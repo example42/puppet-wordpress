@@ -328,7 +328,7 @@ class wordpress (
       },
       default => "${wordpress::real_install_destination}/${wordpress::install_dirname}/",
     },
-    default => $wordpress::config_file,
+    default => $wordpress::config_dir,
   }
 
   $real_data_dir = $wordpress::data_dir ? {
