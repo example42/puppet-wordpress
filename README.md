@@ -81,8 +81,18 @@ For detailed info about the logic and usage patterns of Example42 modules read R
 
 * Automaticallly include a custom subclass
 
-        class { "wordpress:"
+        class { "wordpress":
           my_class => 'wordpress::example42',
+        }
+
+* Use custom options with existing template. Full list includes: DB_CHARSET, DB_COLLATE, AUTH_KEY, SECURE_AUTH_KEY, LOGGED_IN_KEY, NONCE_KEY, AUTH_SALT, SECURE_AUTH_SALT, LOGGED_IN_SALT, NONCE_SALT, table_prefix, WPLANG, WP_DEBUG
+
+        class { "wordpress":
+          options => {
+            'DB_CHARSET' => 'utf8',
+            'DB_COLLATE' => 'utf8_general_ci',
+            'WP_DEBUG'   => 'true',
+          },
         }
 
 
