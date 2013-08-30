@@ -63,7 +63,7 @@ class wordpress::params {
   $source_dir = ''
   $source_dir_purge = ''
   $template = 'wordpress/wp-config.php'
-  $options = ''
+  $options = { }
   $absent = false
 
   ### General module variables that can have a site or per module default
